@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,15 +22,6 @@ public class Rocket : MonoBehaviour
     bool _isTransitioning = false;
     bool _collisionsDisabled = false;
 
-    enum State
-    {
-        Alive,
-        Dieing,
-        Transcending
-
-    }
-    State _state = State.Alive;
-
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -41,20 +30,34 @@ public class Rocket : MonoBehaviour
 
     void Update()
     {
-        if (_state == State.Alive)
+        if (!_isTransitioning)
         {
             RespondToThrustInput();
             RespondToRotateInput();
         }
 
+        if (Debug.isDebugBuild)
+        {
+            RespondToDebugKeys();
+        }
+
+    }
+
+    private void RespondToDebugKeys()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LoadNextLevel();
+        }
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            _collisionsDisabled = !_collisionsDisabled; // toggle
+        }
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (_state != State.Alive)
-        {
-            return;
-        }
+        if (_isTransitioning || _collisionsDisabled) { return; }
 
         switch (collision.gameObject.tag)
         {
@@ -73,7 +76,7 @@ public class Rocket : MonoBehaviour
 
     private void StartDeathSequence()
     {
-        _state = State.Dieing;
+        _isTransitioning = true;
         _audioSource.Stop();
         _audioSource.PlayOneShot(_death);
         _deathParticles.Play();
@@ -82,7 +85,7 @@ public class Rocket : MonoBehaviour
 
     private void StartSuccessSequence()
     {
-        _state = State.Transcending;
+        _isTransitioning = true;
         _audioSource.Stop();
         _audioSource.PlayOneShot(_success);
         _successParticles.Play();
@@ -96,7 +99,13 @@ public class Rocket : MonoBehaviour
 
     private void LoadNextLevel()
     {
-        SceneManager.LoadScene(1);
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = currentSceneIndex + 1;
+        if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
+        {
+            nextSceneIndex = 0; // loop back to start
+        }
+        SceneManager.LoadScene(nextSceneIndex);
     }
 
     private void RespondToThrustInput()
@@ -107,9 +116,14 @@ public class Rocket : MonoBehaviour
         }
         else
         {
-            _audioSource.Stop();
-            _mainEngineParticles.Stop();
+            StopApplyingThrust();
         }
+    }
+
+    private void StopApplyingThrust()
+    {
+        _audioSource.Stop();
+        _mainEngineParticles.Stop();
     }
 
     private void ApplyThrust()
@@ -125,24 +139,22 @@ public class Rocket : MonoBehaviour
 
     private void RespondToRotateInput()
     {
-        _rigidbody.freezeRotation = true; // take manual control
-        float rotationThisFrame = _rcsThrust * Time.deltaTime;
-
         if (Input.GetKey(KeyCode.A))
         {
-
-            transform.Rotate(Vector3.forward * rotationThisFrame);
+            RotateManually(_rcsThrust * Time.deltaTime);
         }
-
         else if (Input.GetKey(KeyCode.D))
         {
-
-            transform.Rotate(-Vector3.forward * rotationThisFrame);
+            RotateManually(-_rcsThrust * Time.deltaTime);
         }
-        _rigidbody.freezeRotation = false;
+    }
+    private void RotateManually(float rotationThisFrame)
+    {
+        _rigidbody.freezeRotation = true; // take manual control of rotation
+        transform.Rotate(Vector3.forward * rotationThisFrame);
+        _rigidbody.freezeRotation = false; // resume physics control of rotation
     }
 }
-
 
 
 
