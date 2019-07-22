@@ -44,7 +44,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -88,7 +88,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 0fc07545c4dcf496d86cb4a3bea4a3ae,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -538,6 +539,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae13d7ae86f984edf9aed9da0fea9667, type: 3}
+--- !u!198 &3497483390704580450 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3497483390704580450, guid: b2352b3932ed7402b8558ba637399302,
+    type: 3}
+  m_PrefabInstance: {fileID: 4090389108566420602}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3782604381016672555 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6968160843448458974, guid: 6bc39db1f1e3848db80ede572c1f0c2d,
@@ -564,7 +571,7 @@ PrefabInstance:
     - target: {fileID: 6014574928089377395, guid: b2352b3932ed7402b8558ba637399302,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.14
+      value: 4.2
       objectReference: {fileID: 0}
     - target: {fileID: 6014574928089377395, guid: b2352b3932ed7402b8558ba637399302,
         type: 3}
@@ -611,8 +618,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.772
       objectReference: {fileID: 0}
+    - target: {fileID: 1431679104312105150, guid: b2352b3932ed7402b8558ba637399302,
+        type: 3}
+      propertyPath: _mainEngineParticles
+      value: 
+      objectReference: {fileID: 4791689210555081407}
+    - target: {fileID: 1431679104312105150, guid: b2352b3932ed7402b8558ba637399302,
+        type: 3}
+      propertyPath: _successParticles
+      value: 
+      objectReference: {fileID: 3497483390704580450}
+    - target: {fileID: 1431679104312105150, guid: b2352b3932ed7402b8558ba637399302,
+        type: 3}
+      propertyPath: _deathParticles
+      value: 
+      objectReference: {fileID: 8635611263429323980}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2352b3932ed7402b8558ba637399302, type: 3}
+--- !u!198 &4791689210555081407 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 4791689210555081407, guid: b2352b3932ed7402b8558ba637399302,
+    type: 3}
+  m_PrefabInstance: {fileID: 4090389108566420602}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6110650199030224885
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -835,6 +863,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b79fff84cdeb44997a3cff50fa89309d, type: 3}
+--- !u!198 &8635611263429323980 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8635611263429323980, guid: b2352b3932ed7402b8558ba637399302,
+    type: 3}
+  m_PrefabInstance: {fileID: 4090389108566420602}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8990067378021841298
 PrefabInstance:
   m_ObjectHideFlags: 0
