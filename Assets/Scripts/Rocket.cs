@@ -77,7 +77,7 @@ public class Rocket : MonoBehaviour
         _audioSource.Stop();
         _audioSource.PlayOneShot(_death);
         _deathParticles.Play();
-        Invoke("LoadFirstLevel", 1);
+        Invoke("LoadFirstLevel", _levelLoadDelay);
     }
 
     private void StartSuccessSequence()
@@ -86,7 +86,7 @@ public class Rocket : MonoBehaviour
         _audioSource.Stop();
         _audioSource.PlayOneShot(_success);
         _successParticles.Play();
-        Invoke("LoadNextLevel", 1f);
+        Invoke("LoadNextLevel", _levelLoadDelay);
     }
 
     private void LoadFirstLevel()
@@ -114,7 +114,7 @@ public class Rocket : MonoBehaviour
 
     private void ApplyThrust()
     {
-        _rigidbody.AddRelativeForce(Vector3.up * _mainThrust);
+        _rigidbody.AddRelativeForce(Vector3.up * _mainThrust * Time.deltaTime);
 
         if (!_audioSource.isPlaying) // so it don't layer
         {
